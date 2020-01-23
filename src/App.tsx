@@ -52,7 +52,7 @@ export default class App extends React.Component<any,any> {
           <Chart style={pageBg} tasks={this.state.tasks} entries={this.state.entries} updateTasks={this.updateTasks} />
         }
         { this.state.section === "settings" &&
-          <Settings style={pageBg} />
+          <Settings style={pageBg} tasks={this.state.tasks} />
         }
       </>
     )

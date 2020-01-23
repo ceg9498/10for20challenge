@@ -41,16 +41,9 @@ export default function Settings(props:any){
           <Card.Body>
             <Card.Title>Tasks</Card.Title>
             <ListGroup>
-              <ListGroup.Item>1.</ListGroup.Item>
-              <ListGroup.Item>2.</ListGroup.Item>
-              <ListGroup.Item>3.</ListGroup.Item>
-              <ListGroup.Item>4.</ListGroup.Item>
-              <ListGroup.Item>5.</ListGroup.Item>
-              <ListGroup.Item>6.</ListGroup.Item>
-              <ListGroup.Item>7.</ListGroup.Item>
-              <ListGroup.Item>8.</ListGroup.Item>
-              <ListGroup.Item>9.</ListGroup.Item>
-              <ListGroup.Item>10.</ListGroup.Item>
+              {props.tasks && props.tasks.map((task:string, index:number)=>
+                <ListGroup.Item>{index+1}. {task}</ListGroup.Item>
+              )}
             </ListGroup>
           </Card.Body>
         </Card>
