@@ -21,18 +21,22 @@ function initIDB(dbName:string, dbVersion:number, objectStoreNames:string[]){
       let db = event.target.result;
       let successCount = 0;
       // Create an objectStore for the database
-      objectStoreNames.forEach((name)=>{
+      objectStoreNames.forEach((name, index)=>{
         updgradeDB(db, name).then(()=>{
           successCount++;
         }).catch((message)=>{
           console.error(message);
+        }).finally(()=>{
+          if(index+1 === objectStoreNames.length){
+            console.log("Reached end of foreach:",index+1, objectStoreNames.length)
+            if(objectStoreNames.length === successCount){
+              resolve("Database access granted");
+            } else {
+              reject("Database access rejected");
+            }
+          }
         });
       });
-      if(successCount === objectStoreNames.length){
-        resolve("Database access granted");
-      } else {
-        reject("Database access rejected");
-      }
     };
 
     request.onsuccess = (event:any) => {
