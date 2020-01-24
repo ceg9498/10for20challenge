@@ -7,8 +7,9 @@ export default class EntryForm extends React.Component<{tasks:string[], updateEn
   constructor(props:any){
     super(props);
     this.state = {
-      task: this.props.tasks[0],
-      date: new Date()
+      task: "placeholder",
+      date: `${new Date().getFullYear()}-${(new Date().getMonth()+1).toString().padStart(2, '0')}-${new Date().getDate()}`,
+      validation: ""
     };
   }
 
@@ -16,9 +17,25 @@ export default class EntryForm extends React.Component<{tasks:string[], updateEn
     let { name, value } = e.target;
     e.preventDefault();
 
+    if(name === "task"){
+      this.setState({
+        validation: ""
+      });
+    }
+
     this.setState({
       [name]: value
     });
+  }
+
+  submitEntry(){
+    if(this.state.task !== "" && this.state.task !== "placeholder"){
+      this.props.updateEntries({date:this.state.date, task: this.state.task});
+    } else {
+      this.setState({
+        validation: "You must select a task"
+      });
+    }
   }
 
   render(){
@@ -50,18 +67,24 @@ export default class EntryForm extends React.Component<{tasks:string[], updateEn
             <Col>
               <Form.Control as="select" 
                 name="task"
-                value={this.state.task} 
+                value={this.state.task}
                 onChange={(e)=>this.handleChange(e)}
               >
-                {this.props.tasks.map((task)=>
+                <option value="placeholder" disabled hidden>Select a Task</option>
+                {this.props.tasks && this.props.tasks.map((task)=>
                   task !== "" &&
                     <option key={task} value={task}>{task}</option>
                 )}
               </Form.Control>
             </Col>
           </Form.Row>
+          <Form.Row>
+            <Form.Text className="text-muted">
+              { this.state.validation }
+            </Form.Text>
+          </Form.Row>
         </Form.Group>
-        <Button variant="primary" onClick={()=>this.props.updateEntries({date:this.state.date, task:this.state.task})}>Submit</Button>
+        <Button variant="primary" onClick={()=>this.submitEntry()}>Submit</Button>
       </Form>
     );
   }

@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import CardColumns from 'react-bootstrap/CardColumns';
 import EntryForm from './EntryForm';
-import TasksForm from './TasksForm';
+import TasksForm from './TaskForm';
 
 export default function Home(props:any){
   let tasks = props.tasks;
@@ -22,12 +22,14 @@ export default function Home(props:any){
             <EntryForm tasks={tasks} updateEntries={props.updateEntries} />
           </Card.Body>
         </Card>
-        <Card>
-          <Card.Body>
-            <Card.Title>My Tasks</Card.Title>
-            <TasksForm tasks={tasks} updateTasks={props.updateTasks} />
-          </Card.Body>
-        </Card>
+        {tasks.length > 0 &&
+          <Card>
+            <Card.Body>
+              <Card.Title>My Tasks</Card.Title>
+              <TasksForm tasks={tasks} updateTasks={props.updateTasks} />
+            </Card.Body>
+          </Card>
+        }
       </CardColumns>
     </Container>
   );
