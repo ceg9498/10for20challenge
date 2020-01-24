@@ -84,9 +84,15 @@ export default class App extends React.Component<any,any> {
   }
 
   addEntry(entry:any){
-    entry.id = new Date().valueOf();
     let entries = this.state.entries;
-    entries.push(entry);
+    let index = entries.findIndex((item:any)=> item.id === entry.id);
+    if(index === -1){
+      entry.tasks = [entry.task];
+      delete entry.task;
+      entries.push(entry);
+    } else {
+      entries[index].tasks.push(entry.task);
+    }
     this.setState({
       entries: entries
     });
