@@ -91,10 +91,8 @@ export default class App extends React.Component<any,any> {
       delete entry.task;
       entries.push(entry);
       index = entries.length-1;
-      console.log("Create a new entry in the array:", entries[entries.length-1]);
     } else {
       entries[index].tasks.push(entry.task);
-      console.log("Add a single task to an array:", entries[index]);
     }
     this.setState({
       entries: entries
@@ -108,7 +106,6 @@ export default class App extends React.Component<any,any> {
   }
 
   render(){
-    console.log("App state:", this.state);
     return(
       <>
         <Navigation
