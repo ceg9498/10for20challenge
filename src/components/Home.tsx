@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import CardColumns from 'react-bootstrap/CardColumns';
 import EntryForm from './EntryForm';
-import TasksForm from './TasksForm';
+import TasksForm from './TaskForm';
 
 export default function Home(props:any){
   let tasks = props.tasks;
