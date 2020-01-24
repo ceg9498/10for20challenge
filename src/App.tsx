@@ -90,13 +90,16 @@ export default class App extends React.Component<any,any> {
       entry.tasks = [entry.task];
       delete entry.task;
       entries.push(entry);
+      index = entries.length-1;
+      console.log("Create a new entry in the array:", entries[entries.length-1]);
     } else {
       entries[index].tasks.push(entry.task);
+      console.log("Add a single task to an array:", entries[index]);
     }
     this.setState({
       entries: entries
     });
-    iDB.addOrUpdateOne(dbName, DB_VER, store.entries, entry)
+    iDB.addOrUpdateOne(dbName, DB_VER, store.entries, entries[index])
     .then((message)=>{
       console.log(message);
     }).catch((message)=>{
