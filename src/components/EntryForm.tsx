@@ -30,7 +30,7 @@ export default class EntryForm extends React.Component<{tasks:string[], updateEn
 
   submitEntry(){
     if(this.state.task !== "" && this.state.task !== "placeholder"){
-      this.props.updateEntries({id:new Date(this.state.date).valueOf(), task: this.state.task});
+      this.props.updateEntries({id:new Date(this.state.date).valueOf(), date: this.state.date, task: this.state.task});
     } else {
       this.setState({
         validation: "You must select a task"
