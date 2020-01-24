@@ -8,7 +8,7 @@ export default class EntryForm extends React.Component<{tasks:string[], updateEn
     super(props);
     this.state = {
       task: this.props.tasks[0],
-      date: new Date()
+      date: `${new Date().getFullYear()}-${(new Date().getMonth()+1).toString().padStart(2, '0')}-${new Date().getDate()}`
     };
   }
 
