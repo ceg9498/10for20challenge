@@ -1,15 +1,18 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import TestChart from './charts/testChart';
+import drawMonth from './charts/drawMonth';
 
 export default function Chart(props:any) {
+  let width = 800;
+  let height = width * .7;
+  drawMonth(props.entries, props.tasks, height, width);
   return (
     <Container fluid={true} style={ props.style }>
       <Card>
         <Card.Body>
           <Card.Title>Chart section</Card.Title>
-          <TestChart entries={props.entries} tasks={props.tasks} />
+          <div id="chart" />
         </Card.Body>
       </Card>
     </Container>
