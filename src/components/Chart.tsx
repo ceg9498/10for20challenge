@@ -9,7 +9,6 @@ export default function Chart(props:any) {
       <Card>
         <Card.Body>
           <Card.Title>Chart section</Card.Title>
-          {JSON.stringify(props.entries)}
           <TestChart entries={props.entries} tasks={props.tasks} />
         </Card.Body>
       </Card>
