@@ -36,7 +36,8 @@ function initIDB(dbName:string, dbVersion:number, objectStoreNames:string[]){
     };
 
     request.onsuccess = (event:any) => {
-      if(!request.onupgradeneeded){
+      let curVer = event.target.result.version;
+      if(curVer === dbVersion){
         resolve('success');
       }
     };
@@ -60,7 +61,7 @@ function updgradeDB(db:any, name:string){
   });
 }
 
-function getAll(dbName:string, dbVersion:number, objectStoreName:string):Promise<object|string>{
+function getAll(dbName:string, dbVersion:number, objectStoreName:string):Promise<object[]|string>{
   return new Promise((resolve, reject)=>{
     let request = window.indexedDB.open(dbName, dbVersion);
 

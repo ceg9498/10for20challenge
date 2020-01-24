@@ -17,7 +17,7 @@ export default class App extends React.Component<any,any> {
     super(props);
     this.state = {
       section: "home",
-      tasks: ["", "", "", "", "", "", "", "", "", ""],
+      tasks: [],
       entries: []
     };
     this.setSection = this.setSection.bind(this);
@@ -26,19 +26,21 @@ export default class App extends React.Component<any,any> {
   }
 
   componentDidMount() {
-    console.log("componentDidMount")
     iDB.init(dbName, DB_VER, [store.tasks, store.entries])
     .then((message)=>{
-      console.log(message);
       iDB.getAll(dbName, DB_VER, store.tasks)
       .then((res)=>{
-        console.log(res);
-        this.setState({
-          tasks: (res as any).tasks
-        });
+        if((res[0] as any).tasks){
+          this.setState({
+            tasks: (res[0] as any).tasks
+          });
+        } else {
+          this.setState({
+            tasks: ["", "", "", "", "", "", "", "", "", ""]
+          })
+        }
         iDB.getAll(dbName, DB_VER, store.entries)
         .then((entries)=>{
-          console.log(entries);
           if(Array.isArray(entries)){
             this.setState({
               entries: entries
@@ -52,8 +54,6 @@ export default class App extends React.Component<any,any> {
       });
     }).catch((message:string) => {
       console.error(message);
-    }).finally(()=>{
-      console.log("callback hell is over.")
     });
   }
 
@@ -91,6 +91,7 @@ export default class App extends React.Component<any,any> {
   }
 
   render(){
+    console.log("App state:", this.state);
     return(
       <>
         <Navigation
