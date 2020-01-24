@@ -26,35 +26,43 @@ export default class App extends React.Component<any,any> {
   }
 
   componentDidMount() {
-    iDB.init(dbName, DB_VER, [store.tasks, store.entries])
-    .then((message)=>{
-      iDB.getAll(dbName, DB_VER, store.tasks)
-      .then((res)=>{
-        if((res[0] as any).tasks){
-          this.setState({
-            tasks: (res[0] as any).tasks
-          });
-        } else {
-          this.setState({
-            tasks: ["", "", "", "", "", "", "", "", "", ""]
-          })
+    this.getData();
+  }
+
+  async getData(){
+    let db;
+    let tasks;
+    let entries;
+    try {
+      db = await iDB.init(dbName, DB_VER, [store.tasks, store.entries]);
+    } catch(e) {
+      console.error(e);
+    }
+    if(db){
+      try {
+        let res = await iDB.getOne(dbName, DB_VER, store.tasks, 1);
+        if(res){
+          tasks = (res as any).tasks;
         }
-        iDB.getAll(dbName, DB_VER, store.entries)
-        .then((entries)=>{
-          if(Array.isArray(entries)){
-            this.setState({
-              entries: entries
-            });
-          }
-        }).catch((message:string)=>{
-          console.error(message);
-        })
-      }).catch((message:string)=>{
-        console.error(message);
-      });
-    }).catch((message:string) => {
-      console.error(message);
-    });
+      } catch(e) {
+        console.error(e);
+      }
+      try {
+        entries = await iDB.getAll(dbName, DB_VER, store.entries);
+      } catch(e) {
+        console.error(e);
+      }
+    }
+    if(!tasks){
+      tasks = ["", "", "", "", "", "", "", "", "", ""];
+    }
+    if(!entries){
+      entries = [];
+    }
+    this.setState({
+      tasks: tasks,
+      entries: entries
+    })
   }
 
   setSection(section:string) {
