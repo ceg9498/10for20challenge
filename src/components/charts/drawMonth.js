@@ -43,18 +43,6 @@ export default function drawMonth(entries, tasks, height, width, monthIndex){
     .attr("y", 35)
     .attr("font-size", "24");
 
-  /*svg.selectAll("rect")
-    .data(monthDays(0, 2020))
-    .enter()
-    .append("rect")
-    .attr("x", (d)=> new Date(2020, 0, d).getUTCDay()*(cellsize+cellpadding))
-    .attr("y", (d)=> (getWeekOfMonthNumber(new Date(2020, 0, d))-1)*(cellsize+cellpadding)+60-cellpadding)
-    .attr("height", cellsize+cellpadding)
-    .attr("width", cellsize+cellpadding)
-    .style("fill", "lightblue")
-    .style("fill-opacity", "0.1")
-    .style("stroke", "black");*/
-
   let cell = svg.selectAll("rect")
     .data(data)
     .enter()
