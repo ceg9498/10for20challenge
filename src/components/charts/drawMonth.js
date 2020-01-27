@@ -29,7 +29,6 @@ export default function drawMonth(entries, tasks, height, width){
       }
     });
   }
-  console.log(data);
   
   svg.append("g")
     .selectAll("text")
