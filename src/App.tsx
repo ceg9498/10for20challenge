@@ -113,15 +113,17 @@ export default class App extends React.Component<any,any> {
           bg="light" 
           textTheme="light"
           setSection={this.setSection} />
-        { this.state.section === "home" &&
-          <Home style={pageBg} tasks={this.state.tasks} updateTasks={this.updateTasks} updateEntries={this.addEntry} />
-        }
-        { this.state.section === "chart" &&
-          <Chart style={pageBg} tasks={this.state.tasks} entries={this.state.entries} updateTasks={this.updateTasks} />
-        }
-        { this.state.section === "settings" &&
-          <Settings style={pageBg} tasks={this.state.tasks} />
-        }
+        <div style={pageBg}>
+        <Home 
+          style={{display: this.state.section === "home" ? "block" : "none"}} 
+          tasks={this.state.tasks} updateTasks={this.updateTasks} updateEntries={this.addEntry} />
+        <Chart
+          style={{display: this.state.section === "chart" ? "block" : "none"}}
+          tasks={this.state.tasks} entries={this.state.entries} updateTasks={this.updateTasks} />
+        <Settings 
+          style={{display: this.state.section === "settings" ? "block" : "none"}}
+          tasks={this.state.tasks} />
+        </div>
       </>
     )
   }
@@ -129,7 +131,7 @@ export default class App extends React.Component<any,any> {
 
 const pageBg = {
   backgroundColor: "lightgrey",
-  height: "100vh",
+  minHeight: "100vh",
   padding: "20px",
   paddingTop: "76px"
 };

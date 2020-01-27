@@ -2,6 +2,8 @@ import * as d3 from 'd3';
 import * as helpers from './helpers';
 
 export default function drawMonth(entries, tasks, height, width, monthIndex){
+  /** CLEAR EXISTING CONTENT */
+  d3.select("#chart").html("");
   if(!monthIndex) monthIndex = 0;
   if(monthIndex > 11) monthIndex = 11;
   tasks = tasks.filter(task => task !== "");
