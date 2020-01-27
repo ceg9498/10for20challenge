@@ -42,7 +42,7 @@ export default function Settings(props:any){
             <Card.Title>Tasks</Card.Title>
             <ListGroup>
               {props.tasks && props.tasks.map((task:string, index:number)=>
-                <ListGroup.Item>{index+1}. {task}</ListGroup.Item>
+                <ListGroup.Item key={index+1}>{index+1}. {task}</ListGroup.Item>
               )}
             </ListGroup>
           </Card.Body>
