@@ -1,7 +1,9 @@
 import * as d3 from 'd3';
 import * as helpers from './helpers';
 
-export default function drawMonth(entries, tasks, height, width){
+export default function drawMonth(entries, tasks, height, width, monthIndex){
+  if(!monthIndex) monthIndex = 0;
+  if(monthIndex > 11) monthIndex = 11;
   tasks = tasks.filter(task => task !== "");
   /** SIZING & SCALE */
   let cellpadding = 10;
@@ -15,7 +17,7 @@ export default function drawMonth(entries, tasks, height, width){
     .attr("height", height)
     .attr("width", width);
   /** CHART */
-  let filtered = entries.filter((entry)=> new Date().getUTCMonth() === new Date(entry.id).getUTCMonth());
+  let filtered = entries.filter((entry)=> monthIndex === new Date(entry.id).getUTCMonth());
   let data = [];
   if(filtered.length > 0){
     let month = new Date(filtered[0].id).getUTCMonth();
