@@ -21,18 +21,21 @@ export default function drawMonth(entries, tasks, height, width, monthIndex){
   /** CHART */
   let filtered = entries.filter((entry)=> monthIndex === new Date(entry.id).getUTCMonth());
   let data = [];
-  if(filtered.length > 0){
-    let month = new Date(filtered[0].id).getUTCMonth();
-    let year = new Date(filtered[0].id).getUTCFullYear();
-    helpers.monthDays(month, year).forEach((day)=>{
+  let year = new Date().getUTCFullYear();
+  helpers.monthDays(monthIndex, year).forEach((day)=>{
+    if(filtered.length > 0){
       let entryIndex = filtered.findIndex((entry)=>new Date(entry.id).getUTCDate() === day);
       if(entryIndex !== -1){
         data.push({day: day, entry: filtered[entryIndex]});
       } else {
-        data.push({day: day, entry: {id:new Date(year, month, day), tasks: []}});
+        data.push({day: day, entry: {id:new Date(year, monthIndex, day), tasks: []}});
       }
-    });
-  }
+    } else {
+      data.push({day: day, entry: {id: new Date(year, monthIndex, day), tasks: []}});
+    }
+  });
+
+  console.log(data);
   
   svg.append("g")
     .selectAll("text")
