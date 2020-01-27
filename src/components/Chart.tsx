@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import drawMonth from './charts/drawMonth';
 
 export default function Chart(props:any) {
-  let width = 800;
+  let width = 600;
   let height = width * .7;
   drawMonth(props.entries, props.tasks, height, width);
   return (
