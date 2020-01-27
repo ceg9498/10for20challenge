@@ -34,8 +34,6 @@ export default function drawMonth(entries, tasks, height, width, monthIndex){
       data.push({day: day, entry: {id: new Date(year, monthIndex, day), tasks: []}});
     }
   });
-
-  console.log(data);
   
   svg.append("g")
     .selectAll("text")
