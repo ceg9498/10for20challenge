@@ -8,7 +8,7 @@ export default function drawMonth(entries, tasks, height, width){
   let cellsize = 50;
   let legendblock = 20;
   let legendpad = 5;
-  let legendPosX = (cellsize*7)+(cellpadding*8);
+  let legendPosX = (cellsize*7)+(cellpadding*8)+cellpadding;
   /** SVG */
   let svg = d3.select("#chart")
     .append('svg')
@@ -16,6 +16,20 @@ export default function drawMonth(entries, tasks, height, width){
     .attr("width", width);
   /** CHART */
   let filtered = entries.filter((entry)=> new Date().getUTCMonth() === new Date(entry.id).getUTCMonth());
+  let data = [];
+  if(filtered.length > 0){
+    let month = new Date(filtered[0].id).getUTCMonth();
+    let year = new Date(filtered[0].id).getUTCFullYear();
+    helpers.monthDays(month, year).forEach((day)=>{
+      let entryIndex = filtered.findIndex((entry)=>new Date(entry.id).getUTCDate() === day);
+      if(entryIndex !== -1){
+        data.push({day: day, entry: filtered[entryIndex]});
+      } else {
+        data.push({day: day, entry: {id:new Date(year, month, day), tasks: []}});
+      }
+    });
+  }
+  console.log(data);
   
   svg.append("g")
     .selectAll("text")
@@ -39,22 +53,22 @@ export default function drawMonth(entries, tasks, height, width){
     .style("stroke", "black");*/
 
   let cell = svg.selectAll("rect")
-    .data(filtered)
+    .data(data)
     .enter()
     .append("rect")
     .attr("class", "cell")
-    .attr("x", (d)=> new Date(d.id).getUTCDay()*(cellsize+cellpadding)+cellpadding)
-    .attr("y", (d)=> (helpers.getWeekOfMonthNumber(new Date(d.id))-1)*(cellsize+cellpadding)+60)
+    .attr("x", (d)=> new Date(d.entry.id).getUTCDay()*(cellsize+cellpadding)+cellpadding)
+    .attr("y", (d)=> (helpers.getWeekOfMonthNumber(new Date(d.entry.id))-1)*(cellsize+cellpadding)+60)
     .attr("height", cellsize)
     .attr("width", cellsize)
     .attr("rx", 5)
     .style("fill", (d)=>{
-        let i = tasks.indexOf(d.tasks[0]);
-        return i !== -1 ? helpers.colors[i] : "black";
+        let i = tasks.indexOf(d.entry.tasks[0]);
+        return i !== -1 ? helpers.colors[i] : "lightgrey";
       });
   
   cell.append("svg:title")
-    .text((d)=>helpers.dateString(new Date(d.id)) + "\n" + helpers.stringifyArray(d.tasks))
+    .text((d)=>helpers.dateString(new Date(d.entry.id)) + "\n" + (d.entry.tasks.length < 0 ? helpers.stringifyArray(d.entry.tasks) : ""))
 
   /** LEGEND */
   let legend = svg.append("g")
@@ -76,4 +90,16 @@ export default function drawMonth(entries, tasks, height, width){
       .attr("y",(legendblock*index)+(legendpad*index)+15)
       .attr("height",20);
   });
+  legend.append("rect")
+    .attr("x",0)
+    .attr("y",(legendblock*tasks.length)+(legendpad*tasks.length))
+    .attr("height",legendblock)
+    .attr("width",legendblock)
+    .style("fill", "lightgrey")
+    .style("stroke", "black");
+  legend.append("text")
+    .text("No activity")
+    .attr("x",legendblock+legendpad)
+    .attr("y",(legendblock*tasks.length)+(legendpad*tasks.length)+15)
+    .attr("height",20);
 }
