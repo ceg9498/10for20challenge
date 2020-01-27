@@ -1,6 +1,8 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navigation(props:any) {
   return(
@@ -14,7 +16,7 @@ export default function Navigation(props:any) {
           <Nav.Link onClick={()=>props.setSection("settings")} eventKey="settings">Settings</Nav.Link>
         </Nav>
       </Navbar.Collapse>
-      <span>Notification Icon</span>
+      <FontAwesomeIcon icon={faBell} />
     </Navbar>
   );
 }
