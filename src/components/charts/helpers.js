@@ -2,8 +2,8 @@
 export function dateString(date){
   return months.get(date.getUTCMonth()) + " " + date.getUTCDate() + ", " + date.getUTCFullYear();
 }
-/*
-function monthDays(month:number, year:number){
+
+export function monthDays(month, year){
   // this function should take month number as a 0-base!
   let days = new Date(year, month+1, 0).getDate();
   let res = [];
@@ -12,7 +12,7 @@ function monthDays(month:number, year:number){
   }
   return res;
 }
-*/
+
 export const months = new Map([
   [0, "Jan"],
   [1, "Feb"],
