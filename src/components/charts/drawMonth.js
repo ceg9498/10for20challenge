@@ -21,18 +21,19 @@ export default function drawMonth(entries, tasks, height, width, monthIndex){
   /** CHART */
   let filtered = entries.filter((entry)=> monthIndex === new Date(entry.id).getUTCMonth());
   let data = [];
-  if(filtered.length > 0){
-    let month = new Date(filtered[0].id).getUTCMonth();
-    let year = new Date(filtered[0].id).getUTCFullYear();
-    helpers.monthDays(month, year).forEach((day)=>{
+  let year = new Date().getUTCFullYear();
+  helpers.monthDays(monthIndex, year).forEach((day)=>{
+    if(filtered.length > 0){
       let entryIndex = filtered.findIndex((entry)=>new Date(entry.id).getUTCDate() === day);
       if(entryIndex !== -1){
         data.push({day: day, entry: filtered[entryIndex]});
       } else {
-        data.push({day: day, entry: {id:new Date(year, month, day), tasks: []}});
+        data.push({day: day, entry: {id:new Date(year, monthIndex, day), tasks: []}});
       }
-    });
-  }
+    } else {
+      data.push({day: day, entry: {id: new Date(year, monthIndex, day), tasks: []}});
+    }
+  });
   
   svg.append("g")
     .selectAll("text")
@@ -42,18 +43,6 @@ export default function drawMonth(entries, tasks, height, width, monthIndex){
     .attr("x", (d, i)=>i*(cellsize+cellpadding)+(cellsize/2))
     .attr("y", 35)
     .attr("font-size", "24");
-
-  /*svg.selectAll("rect")
-    .data(monthDays(0, 2020))
-    .enter()
-    .append("rect")
-    .attr("x", (d)=> new Date(2020, 0, d).getUTCDay()*(cellsize+cellpadding))
-    .attr("y", (d)=> (getWeekOfMonthNumber(new Date(2020, 0, d))-1)*(cellsize+cellpadding)+60-cellpadding)
-    .attr("height", cellsize+cellpadding)
-    .attr("width", cellsize+cellpadding)
-    .style("fill", "lightblue")
-    .style("fill-opacity", "0.1")
-    .style("stroke", "black");*/
 
   let cell = svg.selectAll("rect")
     .data(data)
