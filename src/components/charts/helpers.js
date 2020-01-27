@@ -7,7 +7,7 @@ export function monthDays(month, year){
   // this function should take month number as a 0-base!
   let days = new Date(year, month+1, 0).getDate();
   let res = [];
-  for(let i = 0; i<= days; i++){
+  for(let i = 1; i<= days; i++){
     res.push(i);
   }
   return res;
