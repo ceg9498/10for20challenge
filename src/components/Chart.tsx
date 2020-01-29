@@ -6,7 +6,7 @@ import drawMonth from './charts/drawMonth';
 export default function Chart(props:any) {
   let width = 600;
   let height = width * .7;
-  drawMonth(props.entries, props.tasks, height, width, new Date().getMonth(), props.colors, props.noneColor);
+  drawMonth(props.entries, props.tasks, height, width, new Date().getMonth(), props.colors, props.noneColor, props.theme);
   return (
     <Container fluid={true} style={ props.style }>
       <Card bg={props.theme} style={{color: props.theme === "dark" ? "white" : "black"}}>

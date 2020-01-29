@@ -1,13 +1,14 @@
 import * as d3 from 'd3';
 import * as helpers from './helpers';
 
-export default function drawMonth(entries, tasks, height, width, monthIndex, colors, noneColor){
+export default function drawMonth(entries, tasks, height, width, monthIndex, colors, noneColor, theme){
   if(!colors){
     colors = helpers.colors;
   }
   if(!noneColor){
     noneColor = "lightgray";
   }
+  let textColor = theme === "dark" ? "white" : "black";
   /** CLEAR EXISTING CONTENT */
   d3.select("#chart").html("");
   if(!monthIndex) monthIndex = 0;
@@ -46,6 +47,7 @@ export default function drawMonth(entries, tasks, height, width, monthIndex, col
     .data(["S","M","T","W","T","F","S"]).enter()
     .append("text")
     .text((d)=>d)
+    .style("fill", textColor)
     .attr("x", (d, i)=>i*(cellsize+cellpadding)+(cellsize/2))
     .attr("y", 35)
     .attr("font-size", "24");
@@ -81,9 +83,10 @@ export default function drawMonth(entries, tasks, height, width, monthIndex, col
       .attr("height",legendblock)
       .attr("width",legendblock)
       .style("fill", ()=>colors[index])
-      .style("stroke", "black");
+      .style("stroke", textColor);
     legend.append("text")
       .text(task)
+      .style("fill", textColor)
       .attr("x",legendblock+legendpad)
       .attr("y",(legendblock*index)+(legendpad*index)+15)
       .attr("height",20);
@@ -94,9 +97,10 @@ export default function drawMonth(entries, tasks, height, width, monthIndex, col
     .attr("height",legendblock)
     .attr("width",legendblock)
     .style("fill", noneColor)
-    .style("stroke", "black");
+    .style("stroke", textColor);
   legend.append("text")
     .text("No activity")
+    .style("fill", textColor)
     .attr("x",legendblock+legendpad)
     .attr("y",(legendblock*tasks.length)+(legendpad*tasks.length)+15)
     .attr("height",20);
