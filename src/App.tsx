@@ -1,5 +1,5 @@
 import React from 'react';
-//import Cookies from 'js-cookie';
+import Cookies from 'js-cookie';
 import Navigation from './components/Nav';
 import Settings from './components/Settings';
 import Home from './components/Home';
@@ -20,7 +20,7 @@ export default class App extends React.Component<any,any> {
       section: "home",
       tasks: [],
       entries: [],
-      theme: "dark",
+      theme: "light",
       colors: [
         "#FF0000", // red
         "#FFA500", // orange
@@ -43,23 +43,23 @@ export default class App extends React.Component<any,any> {
   }
 
   componentDidMount() {
-    //let theme = Cookies.get('theme');
-    //let noneColor = Cookies.get('noneColor');
-    //let colors = [];
+    let theme = Cookies.get('theme') || this.state.theme;
+    let noneColor = Cookies.get('noneColor') || this.state.noneColor;
+    let colors:any[] = [];
     // FUTURE: When updating # of tasks, 
     //    the number for this loop needs to be adjusted.
-    /**
-     * for(let i=0, i< 10; i++){
-     *   colors.push(Cookies.get(`color-${i}`));
-     * }
-     */
-    /**
-     * this.setState({
-     *   theme: theme,
-     *   colors: colors,
-     *   noneColor: noneColor
-     * });
-     */
+    
+    for(let i=0; i< 10; i++){
+      let color = Cookies.get(`color-${i}`);
+      colors.push(color ? color : this.state.colors[i]);
+    }
+    
+    this.setState({
+      theme: theme,
+      colors: colors,
+      noneColor: noneColor
+    });
+     
     this.getData();
   }
 
@@ -109,7 +109,7 @@ export default class App extends React.Component<any,any> {
     this.setState({
       theme: theme
     });
-    //Cookies.set('theme', theme, {path: ''})
+    Cookies.set('theme', theme, {expires: 30, path: ''});
   }
 
   updateTasks(tasks:any){
@@ -153,12 +153,12 @@ export default class App extends React.Component<any,any> {
       this.setState({
         colors: colors
       });
-      //Cookies.set(`color-${index}`, color, {path: ''});
+      Cookies.set(`color-${index}`, color, {expires: 30, path: ''});
     } else {
       this.setState({
         noneColor: color
       });
-      // Cookies.set('noneColor', color, {path: ''});
+      Cookies.set('noneColor', color, {expires: 30, path: ''});
     }
   }
 

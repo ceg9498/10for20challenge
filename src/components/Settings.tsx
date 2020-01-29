@@ -14,7 +14,7 @@ export default function Settings(props:any){
             <Card.Title>Page Theme</Card.Title>
           </Card.Header>
           <Card.Body>
-            <ListGroup defaultActiveKey="#dark">
+            <ListGroup activeKey={`#${props.theme}`}>
               <ListGroup.Item 
                 variant={props.theme}
                 href="#light" as="button" action 
