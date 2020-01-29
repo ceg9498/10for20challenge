@@ -28,7 +28,7 @@ export default class TaskForm extends React.Component<{tasks:string[], updateTas
         {this.state.tasks.map((task:string, index:number)=>
           <Form.Group controlId={"task-" + index} key={"task-" + index}>
             <div style={taskRow}>
-              <Form.Label style={{width: "40px", marginTop: "5px"}}>#{index+1}</Form.Label>
+              <Form.Label style={{width: "40px", marginTop: "5px"}}>{index+1}.</Form.Label>
               <Form.Control type="text" value={task}  onChange={(e:any)=>this.onChange(e, index)} />
             </div>
           </Form.Group>
@@ -40,5 +40,6 @@ export default class TaskForm extends React.Component<{tasks:string[], updateTas
 }
 
 let taskRow = {
-  display: "flex"
+  display: "flex",
+  alignItems: "center"
 }
