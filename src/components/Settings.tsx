@@ -11,9 +11,11 @@ export default function Settings(props:any){
         <Card>
           <Card.Body>
             <Card.Title>Page Theme</Card.Title>
-            <ListGroup>
-              <ListGroup.Item active>Light</ListGroup.Item>
-              <ListGroup.Item disabled>Dark</ListGroup.Item>
+            <ListGroup defaultActiveKey="#dark">
+              <ListGroup.Item href="#light" as="button" action 
+                onClick={()=>props.setTheme("light")}>Light</ListGroup.Item>
+              <ListGroup.Item href="#dark" as="button" action 
+                onClick={()=>props.setTheme("dark")}>Dark</ListGroup.Item>
             </ListGroup>
           </Card.Body>
         </Card>

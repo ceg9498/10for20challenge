@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 
 export default function Navigation(props:any) {
+  let iconTheme = props.textTheme === "dark" ? "light" : "dark";
   return(
     <Navbar bg={props.bg} variant={props.textTheme} fixed="top">
       <Navbar.Brand onClick={()=>props.setSection("home")}>#10For20Challenge</Navbar.Brand>
@@ -16,7 +17,7 @@ export default function Navigation(props:any) {
           <Nav.Link onClick={()=>props.setSection("settings")} eventKey="settings">Settings</Nav.Link>
         </Nav>
       </Navbar.Collapse>
-      <FontAwesomeIcon icon={faBell} />
+      <FontAwesomeIcon className={`text-${iconTheme}`} icon={faBell} />
     </Navbar>
   );
 }

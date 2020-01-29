@@ -1,4 +1,5 @@
 import React from 'react';
+//import Cookies from 'js-cookie';
 import Navigation from './components/Nav';
 import Settings from './components/Settings';
 import Home from './components/Home';
@@ -18,9 +19,11 @@ export default class App extends React.Component<any,any> {
     this.state = {
       section: "home",
       tasks: [],
-      entries: []
+      entries: [],
+      theme: "dark"
     };
     this.setSection = this.setSection.bind(this);
+    this.setTheme = this.setTheme.bind(this);
     this.updateTasks = this.updateTasks.bind(this);
     this.addEntry = this.addEntry.bind(this);
   }
@@ -71,6 +74,13 @@ export default class App extends React.Component<any,any> {
     });
   }
 
+  setTheme(theme:string) {
+    this.setState({
+      theme: theme
+    });
+    //Cookies.set('theme', theme, {path: ''})
+  }
+
   updateTasks(tasks:any){
     this.setState({
       tasks: tasks
@@ -110,10 +120,10 @@ export default class App extends React.Component<any,any> {
       <>
         <Navigation
           current="Current" 
-          bg="light" 
-          textTheme="light"
+          bg={this.state.theme} 
+          textTheme={this.state.theme}
           setSection={this.setSection} />
-        <div style={pageBg}>
+        <div style={{...pageBg, backgroundColor: this.state.theme === "light" ? lightBG : darkBG}}>
         <Home 
           style={{display: this.state.section === "home" ? "block" : "none"}} 
           tasks={this.state.tasks} updateTasks={this.updateTasks} updateEntries={this.addEntry} />
@@ -122,7 +132,8 @@ export default class App extends React.Component<any,any> {
           tasks={this.state.tasks} entries={this.state.entries} updateTasks={this.updateTasks} />
         <Settings 
           style={{display: this.state.section === "settings" ? "block" : "none"}}
-          tasks={this.state.tasks} />
+          tasks={this.state.tasks}
+          setTheme={this.setTheme} />
         </div>
       </>
     )
@@ -130,8 +141,10 @@ export default class App extends React.Component<any,any> {
 }
 
 const pageBg = {
-  backgroundColor: "lightgrey",
   minHeight: "100vh",
   padding: "20px",
   paddingTop: "76px"
 };
+
+const lightBG = "rgba(0,0,0,.1)";
+const darkBG = "hsl(208, 8%, 30%)";
