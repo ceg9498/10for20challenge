@@ -29,16 +29,16 @@ export const months = new Map([
 ]);
 
 export const colors = [
-  "red",
-  "orange",
-  "yellow",
-  "limegreen",
-  "green",
-  "lightblue",
-  "blue",
-  "violet",
-  "purple",
-  "pink"
+  "#FF0000", // red
+  "#FFA500", // orange
+  "#FFFF00", // yellow
+  "#32CD32", // limegreen
+  "#008000", // green
+  "#ADD8E6", // lightblue
+  "#0000FF", // blue
+  "#8A2BE2", // blueviolet
+  "#800080", // purple
+  "#FFC0CB" // pink
 ];
 
 export function stringifyArray(arr){

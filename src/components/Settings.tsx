@@ -3,6 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import ListGroup from 'react-bootstrap/ListGroup';
 import CardColumns from 'react-bootstrap/CardColumns';
+import { ColorSetter } from './Color';
 
 export default function Settings(props:any){
   return(
@@ -41,11 +42,20 @@ export default function Settings(props:any){
         </Card>
         <Card>
           <Card.Body>
-            <Card.Title>Tasks</Card.Title>
+            <Card.Title>Task Colors</Card.Title>
             <ListGroup>
               {props.tasks && props.tasks.map((task:string, index:number)=>
-                <ListGroup.Item key={`task-${index}`}>{index+1}. {task}</ListGroup.Item>
+                <ListGroup.Item key={`task-${index}`} style={{display: "flex", alignItems: "center"}}>
+                  <ColorSetter color={props.colors[index]} setColor={props.setColor} index={index} />
+                  &nbsp;
+                  {index+1}. {task}
+                </ListGroup.Item>
               )}
+              <ListGroup.Item style={{display: "flex", alignItems: "center"}}>
+                <ColorSetter color={props.noneColor} setColor={props.setColor} index={-1} />
+                &nbsp;
+                No Task
+              </ListGroup.Item>
             </ListGroup>
           </Card.Body>
         </Card>

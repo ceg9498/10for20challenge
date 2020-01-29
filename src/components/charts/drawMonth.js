@@ -1,7 +1,13 @@
 import * as d3 from 'd3';
 import * as helpers from './helpers';
 
-export default function drawMonth(entries, tasks, height, width, monthIndex){
+export default function drawMonth(entries, tasks, height, width, monthIndex, colors, noneColor){
+  if(!colors){
+    colors = helpers.colors;
+  }
+  if(!noneColor){
+    noneColor = "lightgray";
+  }
   /** CLEAR EXISTING CONTENT */
   d3.select("#chart").html("");
   if(!monthIndex) monthIndex = 0;
@@ -56,7 +62,7 @@ export default function drawMonth(entries, tasks, height, width, monthIndex){
     .attr("rx", 5)
     .style("fill", (d)=>{
         let i = tasks.indexOf(d.entry.tasks[0]);
-        return i !== -1 ? helpers.colors[i] : "lightgrey";
+        return i !== -1 ? colors[i] : noneColor;
       });
   
   cell.append("svg:title")
@@ -74,7 +80,7 @@ export default function drawMonth(entries, tasks, height, width, monthIndex){
       .attr("y",(legendblock*index)+(legendpad*index))
       .attr("height",legendblock)
       .attr("width",legendblock)
-      .style("fill", ()=>helpers.colors[index])
+      .style("fill", ()=>colors[index])
       .style("stroke", "black");
     legend.append("text")
       .text(task)
@@ -87,7 +93,7 @@ export default function drawMonth(entries, tasks, height, width, monthIndex){
     .attr("y",(legendblock*tasks.length)+(legendpad*tasks.length))
     .attr("height",legendblock)
     .attr("width",legendblock)
-    .style("fill", "lightgrey")
+    .style("fill", noneColor)
     .style("stroke", "black");
   legend.append("text")
     .text("No activity")

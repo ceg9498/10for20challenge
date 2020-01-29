@@ -20,15 +20,46 @@ export default class App extends React.Component<any,any> {
       section: "home",
       tasks: [],
       entries: [],
-      theme: "dark"
+      theme: "dark",
+      colors: [
+        "#FF0000", // red
+        "#FFA500", // orange
+        "#FFFF00", // yellow
+        "#32CD32", // limegreen
+        "#008000", // green
+        "#ADD8E6", // lightblue
+        "#0000FF", // blue
+        "#8A2BE2", // blueviolet
+        "#800080", // purple
+        "#FFC0CB" // pink
+      ],
+      noneColor: "#D3D3D3"
     };
     this.setSection = this.setSection.bind(this);
     this.setTheme = this.setTheme.bind(this);
     this.updateTasks = this.updateTasks.bind(this);
     this.addEntry = this.addEntry.bind(this);
+    this.setColor = this.setColor.bind(this);
   }
 
   componentDidMount() {
+    //let theme = Cookies.get('theme');
+    //let noneColor = Cookies.get('noneColor');
+    //let colors = [];
+    // FUTURE: When updating # of tasks, 
+    //    the number for this loop needs to be adjusted.
+    /**
+     * for(let i=0, i< 10; i++){
+     *   colors.push(Cookies.get(`color-${i}`));
+     * }
+     */
+    /**
+     * this.setState({
+     *   theme: theme,
+     *   colors: colors,
+     *   noneColor: noneColor
+     * });
+     */
     this.getData();
   }
 
@@ -115,6 +146,22 @@ export default class App extends React.Component<any,any> {
     });
   }
 
+  setColor(color:string, index:number){
+    if(index > -1){
+      let colors = this.state.colors;
+      colors[index] = color;
+      this.setState({
+        colors: colors
+      });
+      //Cookies.set(`color-${index}`, color, {path: ''});
+    } else {
+      this.setState({
+        noneColor: color
+      });
+      // Cookies.set('noneColor', color, {path: ''});
+    }
+  }
+
   render(){
     return(
       <>
@@ -129,11 +176,16 @@ export default class App extends React.Component<any,any> {
           tasks={this.state.tasks} updateTasks={this.updateTasks} updateEntries={this.addEntry} />
         <Chart
           style={{display: this.state.section === "chart" ? "block" : "none"}}
+          colors={this.state.colors}
+          noneColor={this.state.noneColor}
           tasks={this.state.tasks} entries={this.state.entries} updateTasks={this.updateTasks} />
         <Settings 
           style={{display: this.state.section === "settings" ? "block" : "none"}}
+          colors={this.state.colors}
+          noneColor={this.state.noneColor}
           tasks={this.state.tasks}
-          setTheme={this.setTheme} />
+          setTheme={this.setTheme}
+          setColor={this.setColor} />
         </div>
       </>
     )
