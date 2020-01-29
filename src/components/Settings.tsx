@@ -9,49 +9,75 @@ export default function Settings(props:any){
   return(
     <Container fluid={true} style={ props.style }>
       <CardColumns>
-        <Card>
-          <Card.Body>
+        <Card bg={props.theme} style={{color: props.theme === "dark" ? "white" : "black"}}>
+          <Card.Header>
             <Card.Title>Page Theme</Card.Title>
+          </Card.Header>
+          <Card.Body>
             <ListGroup defaultActiveKey="#dark">
-              <ListGroup.Item href="#light" as="button" action 
+              <ListGroup.Item 
+                variant={props.theme}
+                href="#light" as="button" action 
                 onClick={()=>props.setTheme("light")}>Light</ListGroup.Item>
-              <ListGroup.Item href="#dark" as="button" action 
+              <ListGroup.Item 
+                variant={props.theme}
+                href="#dark" as="button" action 
                 onClick={()=>props.setTheme("dark")}>Dark</ListGroup.Item>
             </ListGroup>
           </Card.Body>
         </Card>
-        <Card>
-          <Card.Body>
+        <Card bg={props.theme} style={{color: props.theme === "dark" ? "white" : "black"}}>
+          <Card.Header>
             <Card.Title>Colors &amp; Patterns</Card.Title>
+          </Card.Header>
+          <Card.Body>
             <Card.Text>This will be accordion groups once options are available.</Card.Text>
             <ListGroup>
-              <ListGroup.Item active>Colors</ListGroup.Item>
-              <ListGroup.Item disabled>Patterns</ListGroup.Item>
+              <ListGroup.Item 
+                variant={props.theme}
+                action active>Colors</ListGroup.Item>
+              <ListGroup.Item 
+                variant={props.theme}
+                action disabled>Patterns</ListGroup.Item>
             </ListGroup>
           </Card.Body>
         </Card>
-        <Card>
-          <Card.Body>
+        <Card bg={props.theme} style={{color: props.theme === "dark" ? "white" : "black"}}>
+          <Card.Header>
             <Card.Title>Chart Formats</Card.Title>
+          </Card.Header>
+          <Card.Body>
             <ListGroup>
-              <ListGroup.Item active>Monthly</ListGroup.Item>
-              <ListGroup.Item disabled>Weekly</ListGroup.Item>
-              <ListGroup.Item disabled>Calendar View</ListGroup.Item>
+              <ListGroup.Item
+                variant={props.theme}
+                action active>Monthly</ListGroup.Item>
+              <ListGroup.Item 
+                variant={props.theme}
+                action disabled>Weekly</ListGroup.Item>
+              <ListGroup.Item 
+                variant={props.theme}
+                action disabled>Calendar View</ListGroup.Item>
             </ListGroup>
           </Card.Body>
         </Card>
-        <Card>
-          <Card.Body>
+        <Card bg={props.theme} style={{color: props.theme === "dark" ? "white" : "black"}}>
+          <Card.Header>
             <Card.Title>Task Colors</Card.Title>
+          </Card.Header>
+          <Card.Body>
             <ListGroup>
               {props.tasks && props.tasks.map((task:string, index:number)=>
-                <ListGroup.Item key={`task-${index}`} style={{display: "flex", alignItems: "center"}}>
+                <ListGroup.Item 
+                  variant={props.theme}
+                  key={`task-${index}`} style={{display: "flex", alignItems: "center"}}>
                   <ColorSetter color={props.colors[index]} setColor={props.setColor} index={index} />
                   &nbsp;
                   {index+1}. {task}
                 </ListGroup.Item>
               )}
-              <ListGroup.Item style={{display: "flex", alignItems: "center"}}>
+              <ListGroup.Item
+                  variant={props.theme}
+                  style={{display: "flex", alignItems: "center"}}>
                 <ColorSetter color={props.noneColor} setColor={props.setColor} index={-1} />
                 &nbsp;
                 No Task

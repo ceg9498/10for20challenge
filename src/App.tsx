@@ -173,10 +173,12 @@ export default class App extends React.Component<any,any> {
         <div style={{...pageBg, backgroundColor: this.state.theme === "light" ? lightBG : darkBG}}>
         <Home 
           style={{display: this.state.section === "home" ? "block" : "none"}} 
+          theme={this.state.theme}
           tasks={this.state.tasks} updateTasks={this.updateTasks} updateEntries={this.addEntry} />
         <Chart
           style={{display: this.state.section === "chart" ? "block" : "none"}}
           colors={this.state.colors}
+          theme={this.state.theme}
           noneColor={this.state.noneColor}
           tasks={this.state.tasks} entries={this.state.entries} updateTasks={this.updateTasks} />
         <Settings 
@@ -185,6 +187,7 @@ export default class App extends React.Component<any,any> {
           noneColor={this.state.noneColor}
           tasks={this.state.tasks}
           setTheme={this.setTheme}
+          theme={this.state.theme}
           setColor={this.setColor} />
         </div>
       </>

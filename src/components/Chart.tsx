@@ -9,9 +9,11 @@ export default function Chart(props:any) {
   drawMonth(props.entries, props.tasks, height, width, new Date().getMonth(), props.colors, props.noneColor);
   return (
     <Container fluid={true} style={ props.style }>
-      <Card>
-        <Card.Body>
+      <Card bg={props.theme} style={{color: props.theme === "dark" ? "white" : "black"}}>
+        <Card.Header>
           <Card.Title>Chart section</Card.Title>
+        </Card.Header>
+        <Card.Body>
           <div id="chart" />
         </Card.Body>
       </Card>
