@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/10for20challenge/static/js/main.85211e2c.chunk.js",
-    "main.js.map": "/10for20challenge/static/js/main.85211e2c.chunk.js.map",
+    "main.js": "/10for20challenge/static/js/main.90bb433b.chunk.js",
+    "main.js.map": "/10for20challenge/static/js/main.90bb433b.chunk.js.map",
     "runtime-main.js": "/10for20challenge/static/js/runtime-main.1d51238c.js",
     "runtime-main.js.map": "/10for20challenge/static/js/runtime-main.1d51238c.js.map",
-    "static/js/2.8393afee.chunk.js": "/10for20challenge/static/js/2.8393afee.chunk.js",
-    "static/js/2.8393afee.chunk.js.map": "/10for20challenge/static/js/2.8393afee.chunk.js.map",
+    "static/js/2.9a03b520.chunk.js": "/10for20challenge/static/js/2.9a03b520.chunk.js",
+    "static/js/2.9a03b520.chunk.js.map": "/10for20challenge/static/js/2.9a03b520.chunk.js.map",
     "index.html": "/10for20challenge/index.html",
-    "precache-manifest.bc5caa310a8702ec1068e3d72db49d82.js": "/10for20challenge/precache-manifest.bc5caa310a8702ec1068e3d72db49d82.js",
+    "precache-manifest.52017d8191f44b04d2d059ce34bc7702.js": "/10for20challenge/precache-manifest.52017d8191f44b04d2d059ce34bc7702.js",
     "service-worker.js": "/10for20challenge/service-worker.js",
-    "static/js/2.8393afee.chunk.js.LICENSE": "/10for20challenge/static/js/2.8393afee.chunk.js.LICENSE"
+    "static/js/2.9a03b520.chunk.js.LICENSE": "/10for20challenge/static/js/2.9a03b520.chunk.js.LICENSE"
   },
   "entrypoints": [
     "static/js/runtime-main.1d51238c.js",
-    "static/js/2.8393afee.chunk.js",
-    "static/js/main.85211e2c.chunk.js"
+    "static/js/2.9a03b520.chunk.js",
+    "static/js/main.90bb433b.chunk.js"
   ]
 }
