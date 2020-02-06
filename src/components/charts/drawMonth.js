@@ -1,18 +1,19 @@
 import * as d3 from 'd3';
 import * as helpers from './helpers';
 
-export default function drawMonth(entries, tasks, height, width, monthIndex, colors, noneColor, theme){
+export default function drawMonth(entries, tasks, height, width, date, colors, noneColor, theme){
   if(!colors){
     colors = helpers.colors;
   }
   if(!noneColor){
     noneColor = "lightgray";
   }
+  if(!date.year || date.year < 1970 || date.year > new Date().getUTCFullYear()) date.year = new Date().getUTCFullYear();
+  if(!date.month || date.month < 0) date.month = 0;
+  if(date.month > 11) date.month = 11;
   let textColor = theme === "dark" ? "white" : "black";
   /** CLEAR EXISTING CONTENT */
   d3.select("#chart").html("");
-  if(!monthIndex) monthIndex = 0;
-  if(monthIndex > 11) monthIndex = 11;
   tasks = tasks.filter(task => task !== "");
   /** SIZING & SCALE */
   let cellpadding = 10;
@@ -26,19 +27,18 @@ export default function drawMonth(entries, tasks, height, width, monthIndex, col
     .attr("height", height)
     .attr("width", width);
   /** CHART */
-  let filtered = entries.filter((entry)=> monthIndex === new Date(entry.id).getUTCMonth());
+  let filtered = entries.filter((entry)=> date.month === new Date(entry.id).getUTCMonth() && date.year === new Date(entry.id).getUTCFullYear());
   let data = [];
-  let year = new Date().getUTCFullYear();
-  helpers.monthDays(monthIndex, year).forEach((day)=>{
+  helpers.monthDays(date.month, date.year).forEach((day)=>{
     if(filtered.length > 0){
       let entryIndex = filtered.findIndex((entry)=>new Date(entry.id).getUTCDate() === day);
       if(entryIndex !== -1){
         data.push({day: day, entry: filtered[entryIndex]});
       } else {
-        data.push({day: day, entry: {id:new Date(year, monthIndex, day), tasks: []}});
+        data.push({day: day, entry: {id:new Date(date.year, date.month, day), tasks: []}});
       }
     } else {
-      data.push({day: day, entry: {id: new Date(year, monthIndex, day), tasks: []}});
+      data.push({day: day, entry: {id: new Date(date.year, date.month, day), tasks: []}});
     }
   });
   
