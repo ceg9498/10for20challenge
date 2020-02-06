@@ -68,7 +68,7 @@ export default function drawMonth(entries, tasks, height, width, date, colors, n
       });
   
   cell.append("svg:title")
-    .text((d)=>helpers.dateString(new Date(d.entry.id)) + "\n" + (d.entry.tasks.length < 0 ? helpers.stringifyArray(d.entry.tasks) : ""))
+    .text((d)=>helpers.dateString(new Date(d.entry.id)) + "\n" + (d.entry.tasks.length > 0 ? helpers.stringifyArray(d.entry.tasks) : ""));
 
   /** LEGEND */
   let legend = svg.append("g")
