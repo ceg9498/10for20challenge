@@ -44,7 +44,7 @@ export default function Chart(props:any) {
                 }}
               >
                 {monthsArr.map((value)=>
-                  <option value={value[0]}>{value[1]}</option>
+                  <option key={value[1]} value={value[0]}>{value[1]}</option>
                 )}
               </Form.Control>
             </Col>
