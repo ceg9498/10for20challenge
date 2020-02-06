@@ -41,6 +41,10 @@ export default function drawMonth(entries, tasks, height, width, date, colors, n
       data.push({day: day, entry: {id: new Date(date.year, date.month, day), tasks: []}});
     }
   });
+
+  /** LINEAR GRADIENT DEFS */
+  let defs = svg.append("defs");
+  let gradientMap = new Map();
   
   svg.append("g")
     .selectAll("text")
@@ -63,8 +67,31 @@ export default function drawMonth(entries, tasks, height, width, date, colors, n
     .attr("width", cellsize)
     .attr("rx", 5)
     .style("fill", (d)=>{
-        let i = tasks.indexOf(d.entry.tasks[0]);
-        return i !== -1 ? colors[i] : noneColor;
+        if(d.entry.tasks.length === 0){
+          return noneColor;
+        } else if(d.entry.tasks.length === 1){
+          let i = tasks.indexOf(d.entry.tasks[0]);
+          return colors[i];
+        } else {
+          // LINEAR GRADIENT
+          let gradient = defs.append("linearGradient")
+            .attr("id", `lg-${d.entry.id}`)
+            .attr("x1", "0%")
+            .attr("y1", "0%")
+            .attr("x2", "0%")
+            .attr("y2", "100%");
+          gradientMap.set(d.entry.id, gradient);
+
+          d.entry.tasks.forEach((task, index)=>{
+            gradientMap.get(d.entry.id).append("stop")
+              .attr("offset", ()=> index === 0 ? 0+"%" : index/d.entry.tasks.length*100+"%")
+              .attr("stop-color", colors[tasks.indexOf(task)]);
+            gradientMap.get(d.entry.id).append("stop")
+              .attr("offset", ()=> (index+1)/d.entry.tasks.length*100+"%")
+              .attr("stop-color", colors[tasks.indexOf(task)]);
+          });
+          return `url(#lg-${d.entry.id})`;
+        }
       });
   
   cell.append("svg:title")
