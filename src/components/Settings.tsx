@@ -47,16 +47,15 @@ export default function Settings(props:any){
             <Card.Title>Chart Formats</Card.Title>
           </Card.Header>
           <Card.Body>
-            <ListGroup>
+            <ListGroup activeKey={`#${props.singleMonth ? 'monthly' : 'yearly'}`}>
               <ListGroup.Item
                 variant={props.theme}
-                action active>Monthly</ListGroup.Item>
+                href="#monthly" as="button" action
+                onClick={()=>props.setChart("month")}>Monthly</ListGroup.Item>
               <ListGroup.Item 
                 variant={props.theme}
-                action disabled>Weekly</ListGroup.Item>
-              <ListGroup.Item 
-                variant={props.theme}
-                action disabled>Calendar View</ListGroup.Item>
+                href="#yearly" as="button" action
+                onClick={()=>props.setChart("year")}>Yearly</ListGroup.Item>
             </ListGroup>
           </Card.Body>
         </Card>

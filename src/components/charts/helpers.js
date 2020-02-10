@@ -1,3 +1,4 @@
+import * as d3 from 'd3';
 
 export function dateString(date){
   return months.get(date.getUTCMonth()) + " " + date.getUTCDate() + ", " + date.getUTCFullYear();
@@ -26,6 +27,21 @@ export const months = new Map([
   [9, "Oct"],
   [10, "Nov"],
   [11, "Dec"]
+]);
+
+export const fullMonths = new Map([
+  [0, "January"],
+  [1, "February"],
+  [2, "March"],
+  [3, "April"],
+  [4, "May"],
+  [5, "June"],
+  [6, "July"],
+  [7, "August"],
+  [8, "September"],
+  [9, "October"],
+  [10, "November"],
+  [11, "December"]
 ]);
 
 export const colors = [
@@ -66,4 +82,8 @@ export function getWeekOfMonthNumber(dt){
     }
   }
   return weekNum;
+}
+
+export function clearCanvas(){
+  d3.select("#chart").html("");
 }

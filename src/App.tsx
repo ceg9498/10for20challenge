@@ -21,6 +21,7 @@ export default class App extends React.Component<any,any> {
       tasks: [],
       entries: [],
       theme: "light",
+      singleMonth: true,
       colors: [
         "#FF0000", // red
         "#FFA500", // orange
@@ -40,11 +41,13 @@ export default class App extends React.Component<any,any> {
     this.updateTasks = this.updateTasks.bind(this);
     this.addEntry = this.addEntry.bind(this);
     this.setColor = this.setColor.bind(this);
+    this.setChart = this.setChart.bind(this);
   }
 
   componentDidMount() {
     let theme = Cookies.get('theme') || this.state.theme;
     let noneColor = Cookies.get('noneColor') || this.state.noneColor;
+    let chart = Cookies.get('chart') === 'year' ? false : true;
     let colors:any[] = [];
     // FUTURE: When updating # of tasks, 
     //    the number for this loop needs to be adjusted.
@@ -57,7 +60,8 @@ export default class App extends React.Component<any,any> {
     this.setState({
       theme: theme,
       colors: colors,
-      noneColor: noneColor
+      noneColor: noneColor,
+      singleMonth: chart
     });
      
     this.getData();
@@ -124,6 +128,19 @@ export default class App extends React.Component<any,any> {
     });
   }
 
+  setChart(chart:string){
+    if(chart === "year"){
+      this.setState({
+        singleMonth: false
+      });
+    } else {
+      this.setState({
+        singleMonth: true
+      });
+    }
+    Cookies.set('chart', chart, {expires: 30, path: ''});
+  }
+
   addEntry(entry:any){
     let entries = this.state.entries;
     let index = entries.findIndex((item:any)=> item.id === entry.id);
@@ -180,7 +197,7 @@ export default class App extends React.Component<any,any> {
           colors={this.state.colors}
           theme={this.state.theme}
           noneColor={this.state.noneColor}
-          tasks={this.state.tasks} entries={this.state.entries} updateTasks={this.updateTasks} />
+          tasks={this.state.tasks} entries={this.state.entries} singleMonth={this.state.singleMonth} />
         <Settings 
           style={{display: this.state.section === "settings" ? "block" : "none"}}
           colors={this.state.colors}
@@ -188,7 +205,9 @@ export default class App extends React.Component<any,any> {
           tasks={this.state.tasks}
           setTheme={this.setTheme}
           theme={this.state.theme}
-          setColor={this.setColor} />
+          setColor={this.setColor}
+          singleMonth={this.state.singleMonth}
+          setChart={this.setChart} />
         </div>
       </>
     )

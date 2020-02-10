@@ -12,15 +12,12 @@ export default function drawMonth(entries, tasks, height, width, date, colors, n
   if(!date.month || date.month < 0) date.month = 0;
   if(date.month > 11) date.month = 11;
   let textColor = theme === "dark" ? "white" : "black";
-  /** CLEAR EXISTING CONTENT */
-  d3.select("#chart").html("");
+  /** FILTER TASKS */
   tasks = tasks.filter(task => task !== "");
   /** SIZING & SCALE */
   let cellpadding = 10;
   let cellsize = 50;
-  let legendblock = 20;
-  let legendpad = 5;
-  let legendPosX = (cellsize*7)+(cellpadding*8)+cellpadding;
+  let aWidth = (cellsize*7)+(cellpadding*6);
   /** SVG */
   let svg = d3.select("#chart")
     .append('svg')
@@ -45,6 +42,14 @@ export default function drawMonth(entries, tasks, height, width, date, colors, n
   /** LINEAR GRADIENT DEFS */
   let defs = svg.append("defs");
   let gradientMap = new Map();
+
+  svg.append("text")
+    .text(()=>helpers.fullMonths.get(date.month))
+    .style("fill", textColor)
+    .attr("x", ()=>aWidth/2)
+    .attr("y", 25)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "24");
   
   svg.append("g")
     .selectAll("text")
@@ -53,7 +58,7 @@ export default function drawMonth(entries, tasks, height, width, date, colors, n
     .text((d)=>d)
     .style("fill", textColor)
     .attr("x", (d, i)=>i*(cellsize+cellpadding)+(cellsize/2))
-    .attr("y", 35)
+    .attr("y", 50)
     .attr("font-size", "24");
 
   let cell = svg.selectAll("rect")
@@ -96,39 +101,4 @@ export default function drawMonth(entries, tasks, height, width, date, colors, n
   
   cell.append("svg:title")
     .text((d)=>helpers.dateString(new Date(d.entry.id)) + "\n" + (d.entry.tasks.length > 0 ? helpers.stringifyArray(d.entry.tasks) : ""));
-
-  /** LEGEND */
-  let legend = svg.append("g")
-    .attr("id","legend")
-    .attr("height", (legendblock+legendpad)*tasks.length)
-    .attr("width", 100)
-    .attr("transform", `translate(${legendPosX},20)`);
-  tasks.forEach((task, index)=>{
-    legend.append("rect")
-      .attr("x",0)
-      .attr("y",(legendblock*index)+(legendpad*index))
-      .attr("height",legendblock)
-      .attr("width",legendblock)
-      .style("fill", ()=>colors[index])
-      .style("stroke", textColor);
-    legend.append("text")
-      .text(task)
-      .style("fill", textColor)
-      .attr("x",legendblock+legendpad)
-      .attr("y",(legendblock*index)+(legendpad*index)+15)
-      .attr("height",20);
-  });
-  legend.append("rect")
-    .attr("x",0)
-    .attr("y",(legendblock*tasks.length)+(legendpad*tasks.length))
-    .attr("height",legendblock)
-    .attr("width",legendblock)
-    .style("fill", noneColor)
-    .style("stroke", textColor);
-  legend.append("text")
-    .text("No activity")
-    .style("fill", textColor)
-    .attr("x",legendblock+legendpad)
-    .attr("y",(legendblock*tasks.length)+(legendpad*tasks.length)+15)
-    .attr("height",20);
 }

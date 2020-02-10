@@ -4,6 +4,8 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import drawMonth from './charts/drawMonth';
+import drawLegend from './charts/legend';
+import { clearCanvas } from './charts/helpers';
 
 const monthsArr = [
   [0, "January"],
@@ -20,12 +22,22 @@ const monthsArr = [
   [11, "December"]
 ];
 
-export default function Chart(props:any) {
+export default function Chart(props:{entries:any, tasks: any, style:any, colors:any, noneColor:string, theme:any, singleMonth:boolean}) {
   const [month, setMonth] = React.useState(new Date().getUTCMonth());
   const [year, setYear] = React.useState(new Date().getUTCFullYear());
   let width = 600;
   let height = width * .7;
-  drawMonth(props.entries, props.tasks, height, width, {month, year}, props.colors, props.noneColor, props.theme);
+  let filteredTasks = props.tasks.filter((task:string)=> task !== "");
+  clearCanvas();
+  if(props.singleMonth){
+    drawMonth(props.entries, props.tasks, height, width, {month, year}, props.colors, props.noneColor, props.theme);
+  } else {
+    for(let month = 0; month < 12; month++){
+      drawMonth(props.entries, props.tasks, height, width, {month, year}, props.colors, props.noneColor, props.theme);
+    }
+  }
+  drawLegend(filteredTasks, props.theme, props.noneColor, props.colors);
+  
   return (
     <Container fluid={true} style={ props.style }>
       <Card bg={props.theme} style={{color: props.theme === "dark" ? "white" : "black"}}>
