@@ -13,9 +13,19 @@ export default function drawMonth(entries, tasks, height, width, date, colors, n
   if(date.month > 11) date.month = 11;
   let textColor = theme === "dark" ? "white" : "black"
   /** SIZING & SCALE */
-  let cellpadding = 10;
-  let cellsize = 50;
+  const max = {
+    pad: 10,
+    size: 50,
+    total: (10*6) + (50*7)
+  };
+  if(width > max.total){
+    // divide the width into multiple columns
+    width = width/2;
+  }
+  let cellpadding = ((5/6 * width/7) > max.size) ? max.pad : (1/6 * width/8);
+  let cellsize = ((5/6 * width/7) > max.size) ? max.size : (5/6 * width/7);
   let aWidth = (cellsize*7)+(cellpadding*6);
+  height = 60 + (6*cellsize) + (5*cellpadding);
   /** SVG */
   let svg = d3.select("#chart")
     .append('svg')

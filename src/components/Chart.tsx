@@ -25,9 +25,11 @@ const monthsArr = [
 export default function Chart(props:{entries:any, tasks: any, style:any, colors:any, noneColor:string, theme:any, singleMonth:boolean}) {
   const [month, setMonth] = React.useState(new Date().getUTCMonth());
   const [year, setYear] = React.useState(new Date().getUTCFullYear());
-  let width = 600;
+  // available width, based on CSS: 2.5rem + 70px
+  let width = window.innerHeight - 90;;
   let height = width * .7;
   let filteredTasks = props.tasks.filter((task:string)=> task !== "");
+
   clearCanvas();
   if(props.singleMonth){
     drawMonth(props.entries, filteredTasks, height, width, {month, year}, props.colors, props.noneColor, props.theme);
