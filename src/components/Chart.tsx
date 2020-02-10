@@ -30,10 +30,10 @@ export default function Chart(props:{entries:any, tasks: any, style:any, colors:
   let filteredTasks = props.tasks.filter((task:string)=> task !== "");
   clearCanvas();
   if(props.singleMonth){
-    drawMonth(props.entries, props.tasks, height, width, {month, year}, props.colors, props.noneColor, props.theme);
+    drawMonth(props.entries, filteredTasks, height, width, {month, year}, props.colors, props.noneColor, props.theme);
   } else {
     for(let month = 0; month < 12; month++){
-      drawMonth(props.entries, props.tasks, height, width, {month, year}, props.colors, props.noneColor, props.theme);
+      drawMonth(props.entries, filteredTasks, height, width, {month, year}, props.colors, props.noneColor, props.theme);
     }
   }
   drawLegend(filteredTasks, props.theme, props.noneColor, props.colors);

@@ -11,9 +11,7 @@ export default function drawMonth(entries, tasks, height, width, date, colors, n
   if(!date.year || date.year < 1970 || date.year > new Date().getUTCFullYear()) date.year = new Date().getUTCFullYear();
   if(!date.month || date.month < 0) date.month = 0;
   if(date.month > 11) date.month = 11;
-  let textColor = theme === "dark" ? "white" : "black";
-  /** FILTER TASKS */
-  tasks = tasks.filter(task => task !== "");
+  let textColor = theme === "dark" ? "white" : "black"
   /** SIZING & SCALE */
   let cellpadding = 10;
   let cellsize = 50;
