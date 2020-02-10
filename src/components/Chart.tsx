@@ -48,20 +48,22 @@ export default function Chart(props:{entries:any, tasks: any, style:any, colors:
         </Card.Header>
         <Card.Body>
           <Form.Row style={{width:width}}>
-            <Col>
-              <Form.Control as="select" name="month" 
-                value={month.toString()}
-                onChange={(e:any)=>{
-                  e.preventDefault();
-                  let value = parseInt(e.target.value);
-                  setMonth(value);
-                }}
-              >
-                {monthsArr.map((value)=>
-                  <option key={value[1]} value={value[0]}>{value[1]}</option>
-                )}
-              </Form.Control>
-            </Col>
+            {props.singleMonth &&
+              <Col>
+                <Form.Control as="select" name="month" 
+                  value={month.toString()}
+                  onChange={(e:any)=>{
+                    e.preventDefault();
+                    let value = parseInt(e.target.value);
+                    setMonth(value);
+                  }}
+                >
+                  {monthsArr.map((value)=>
+                    <option key={value[1]} value={value[0]}>{value[1]}</option>
+                  )}
+                </Form.Control>
+              </Col>
+            }
             <Col>
               <Form.Control type="number" name="year"
                 value={year.toString()}
